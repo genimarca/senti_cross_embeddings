@@ -10,7 +10,7 @@ class Document:
     '''
 
 
-    def __init__(self, params):
+    def __init__(self):
         '''
         Constructor
         '''
@@ -18,8 +18,8 @@ class Document:
         self.__raw_text = ""
         self.__process_text = []
         self.__raw_label = ""
-        self.__sparse_label = ""
-        self.__prob_label = []
+        self.__sparse_label = None
+        self.__categorical_label = None
         
         
     @property
@@ -63,10 +63,10 @@ class Document:
         self.__sparse_label = a_sparse_label
         
     @property
-    def prob_label(self):
+    def categorical_label(self):
         return self.__prob_label
     
-    @prob_label.setter
-    def prob_label(self, a_prob_label):
+    @categorical_label.setter
+    def categorical_label(self, a_prob_label):
         self.__prob_label = a_prob_label
         

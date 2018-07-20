@@ -2,32 +2,28 @@
 # *-* coding: utf-8 *-*
 
 '''
-Created on 13 jul. 2018
+Created on 20 jul. 2018
 
 @author: Eugenio Martínez Cámara
 '''
-
 from sce.model.dao.abs_corpus import ABSCorpus
-from sce.model.dao.corpus_general_tass_xml_parser import CorpusGeneralTASSXML
-from xml.etree.ElementTree import XMLParser
 from sce.model.document import Document
-from sce.model.abs_allow_labels import ABSAllowLabel
 from sce.model.bilabel_experiments import BilabelExperiments
 from sce.model.trilabel_experiments import TrilabelExperiments
 
-class CorpusGeneralTASS(ABSCorpus):
+class CorpusAlecGoStanford(ABSCorpus):
     '''
-    General TASS corpus class
+    classdocs
     '''
 
 
     def __init__(self, allow_labels=BilabelExperiments()):
         '''
-        Constructor
+        Sole constructor
         '''
         self.__corpus = {}
         self.__encoding = ""
-        self.__doc_ids = []
+        self.__SEP_CHAR = ","
         self.__allow_labels = allow_labels
         self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
         
@@ -72,27 +68,33 @@ class CorpusGeneralTASS(ABSCorpus):
     
     def __add_document(self, raw_tweet):
         
-        label_index = self.__allow_labels.get_label_index(raw_tweet["label"])
+        raw_label = ""
+        if raw_tweet[1] == "0":
+            raw_label = "negative"
+        elif raw_tweet[1] == "2":
+            raw_label = "neutral"
+        elif raw_tweet[1] == "4":
+            raw_label = "postive"
+            
+        label_index = self.__allow_labels.get_label_index(raw_label)
         if label_index is not None:
             tweet = Document()
-            tweet.id = raw_tweet["id"]
-            tweet.raw_text = raw_tweet["content"]
+            tweet.id = raw_tweet[1][1:-1]
+            tweet.raw_text = raw_tweet[-1][1:-1]
             tweet.raw_label = self.__allow_labels.get_label_name(label_index)
             tweet.sparse_label = label_index
             self.__doc_x_labels[label_index]+=1
-            self.__corpus[label_index] = tweet
-    
+            self.__corpus[tweet.id] = tweet
+        
     def load(self, path):
         """
         """
-        own_xml_parser = CorpusGeneralTASSXML()
-        xml_parser = XMLParser(target=own_xml_parser) 
+        own_split = str.split
+        own_strip = str.strip
         with open(path, encoding=self.__encoding) as corpus_file:
             for line in corpus_file:
-                xml_parser.feed(line)
-                if own_xml_parser.full_doc:
-                    raw_tweet = own_xml_parser.doc
-                    self.__add_document(raw_tweet)
+                fields = own_split(own_strip(line), self.__SEP_CHAR)
+                self.__add_document(fields)
                     
                 
         

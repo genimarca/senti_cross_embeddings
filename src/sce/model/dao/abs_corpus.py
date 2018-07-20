@@ -7,6 +7,7 @@ Created on 13 jul. 2018
 '''
 
 from abc import ABCMeta, abstractmethod
+from sce.model.abs_allow_labels import ABSAllowLabel
 
 class ABSCorpus(metaclass=ABCMeta):
     '''
@@ -14,13 +15,25 @@ class ABSCorpus(metaclass=ABCMeta):
     '''
 
     @abstractmethod
-    def __init__(self, params):
+    def __init__(self, allow_labels=ABSAllowLabel()):
         '''
         Sole constructor
         '''
         
         
         
+    @property
+    @abstractmethod
+    def allow_labels(self):
+        """
+        """
+        
+    @allow_labels.setter
+    @abstractmethod
+    def allow_labels(self, a_allow_labels):
+        """
+        """
+    
     @property
     @abstractmethod
     def encoding(self):
@@ -42,12 +55,6 @@ class ABSCorpus(metaclass=ABCMeta):
     @property
     @abstractmethod
     def doc_ids(self):
-        """
-        """
-        
-    @property
-    @abstractmethod
-    def labels(self):
         """
         """
         

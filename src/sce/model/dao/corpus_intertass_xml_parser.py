@@ -1,17 +1,18 @@
 #!/usr/bin/python3
-# *-* coding: utf-8 *-*
+# *-* coding: utf-8 *-* 
 '''
-Created on 13 jul. 2018
+Created on 20 jul. 2018
 
-@author: Eugenio Martínez Cámara
+@author: geniugr
 '''
 
-class CorpusGeneralTASSXML:
+class CorpusInterTASSXMLParser:
     '''
+    classdocs
     '''
 
 
-    def __init__(self):
+    def __init__(self, params):
         '''
         sole constructor
         '''
@@ -57,9 +58,8 @@ class CorpusGeneralTASSXML:
         
     def __get_polarity(self, data):
         
-        if self.__tag == "value" and self.__tag_end != "entity":
-            self.__doc["label"] = data
-            self.__full_doc = True
+        self.__doc["label"] = data
+        self.__full_doc = True
         
         
     
@@ -74,4 +74,4 @@ class CorpusGeneralTASSXML:
         
     def close(self):
         return
-    
+        
