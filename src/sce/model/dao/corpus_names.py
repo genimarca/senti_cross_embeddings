@@ -25,3 +25,6 @@ class CorpusNames(Enum):
     SENTIPOLC = "sce.model.dao.corpus_sentipolc.CorpusSentipolc"
     
     ALEC_GO_STANFORD = "sce.model.dao.corpus_alec_go_stanford.CorpusAlecGoStanford"
+    
+    COST = "sce.model.dao.corpus_alec_go_stanford.CorpusCOST"
+    
