@@ -8,7 +8,8 @@ Created on 21 jul. 2018
 
 import re
 from nltk.tokenize.casual import casual_tokenize
-
+from nltk.corpus import stopwords
+from nltk.stem import SnowballStemmer
 class NLPUtils:
     '''
     classdocs
@@ -25,3 +26,18 @@ class NLPUtils:
         #(?<! --> Negative negative look-behind. To prevent before @ a character distinct of white space
         pattern = re.compile(r"(?<![A-Za-z0-9_!@#\$%&*])@(([A-Za-z0-9_]){20}(?!@))|(?<![A-Za-z0-9_!@#\$%&*])@(([A-Za-z0-9_]){1,19})(?![A-Za-z0-9_]*@)")
         return pattern.sub(str_replace, text)
+    
+    
+    @staticmethod
+    def normalization_lowercas(text):
+        return text.lower()
+    
+    @staticmethod
+    def stopper(tokens, language):
+        lang_stopwords = stopwords.words(language)
+        return [t for t in tokens if t not in lang_stopwords]
+    
+    @staticmethod
+    def stemmer(tokens, language):
+        stemmer = SnowballStemmer(language)
+        return [stemmer.stem(t) for t in tokens]

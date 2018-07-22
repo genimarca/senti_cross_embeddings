@@ -8,4 +8,4 @@ Package for objects that directly work with the classification algorithms.
 @date: 21/07/2018
 '''
 
-__all__ = []
+__all__ = ["abs_classification", "classification_names", "factory_classification", "results_metrics", "svm_classification"]

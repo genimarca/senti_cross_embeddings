@@ -41,17 +41,16 @@ class ABSClassification(metaclass=ABCMeta):
     
     @property
     @abstractmethod
-    def results(self):
-        pass
-    
-    @property
-    @abstractmethod
     def predictions(self):
         pass
     
     
     @abstractmethod
-    def make_feature_space(self):
+    def make_feature_space_training(self, external_knowledge=None):
+        pass
+    
+    @abstractmethod
+    def make_feature_space_evaluation(self, external_knowledge=None):
         pass
     
     @abstractmethod
