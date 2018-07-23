@@ -15,13 +15,13 @@ class FactoryAllowLabels:
 
 
     @classmethod
-    def creator(cls, corpus_name_key):
+    def creator(cls, allow_labels_name_key):
         cl = None
-        if corpus_name_key in AllowLabelsNames.__members__.keys():
-            corpus_class_path = AllowLabelsNames.__members__[corpus_name_key].value
-            corpus_class_fields = corpus_class_path.rsplit(".", 1)
-            module = __import__(corpus_class_fields[0], corpus_class_fields[-1])
-            cl = getattr(module, corpus_class_fields[-1])()
+        if allow_labels_name_key in AllowLabelsNames.__members__.keys():
+            allow_labels_class_path = AllowLabelsNames.__members__[allow_labels_name_key].value
+            allow_labels_class_fields = allow_labels_class_path.rsplit(".", 1)
+            module = __import__(allow_labels_class_fields[0], fromlist=allow_labels_class_fields[-1])
+            cl = getattr(module, allow_labels_class_fields[-1])()
             
         return cl
         

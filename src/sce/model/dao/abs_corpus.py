@@ -15,7 +15,7 @@ class ABSCorpus(metaclass=ABCMeta):
     '''
 
     @abstractmethod
-    def __init__(self, allow_labels=ABSAllowLabel()):
+    def __init__(self, allow_labels=ABSAllowLabel):
         '''
         Sole constructor
         '''

@@ -26,5 +26,5 @@ class CorpusNames(Enum):
     
     ALEC_GO_STANFORD = "sce.model.dao.corpus_alec_go_stanford.CorpusAlecGoStanford"
     
-    COST = "sce.model.dao.corpus_alec_go_stanford.CorpusCOST"
+    COST = "sce.model.dao.corpus_cost.CorpusCOST"
     

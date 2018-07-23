@@ -29,7 +29,7 @@ class NLPUtils:
     
     
     @staticmethod
-    def normalization_lowercas(text):
+    def normalization_lowercase(text):
         return text.lower()
     
     @staticmethod

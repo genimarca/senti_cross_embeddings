@@ -26,7 +26,7 @@ class Document:
     def id(self):
         return self.id
     
-    @id.value
+    @id.setter
     def id(self, a_id):
         self.id = a_id
     

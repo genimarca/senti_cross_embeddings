@@ -9,7 +9,10 @@ Created on 22 jul. 2018
 from sce.model.classification.abs_classification import ABSClassification
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-import sklearn.svm.SVC as sksvm
+from sklearn.svm import SVC
+from sce.model.nlp_utils import NLPUtils
+from sce.model.properties_manager import PropertiesManager
+from sce.model.properties_names import PropertiesNames
 
 class SVMClassification(ABSClassification):
     '''
@@ -52,10 +55,28 @@ class SVMClassification(ABSClassification):
         return self.__predictions
     
     
+    def __feature_engineering(self, corpus):
+        
+        for doc_index in corpus.corpus:
+            doc = self.__training_corpus.get_document(doc_index)
+            preparing_text = NLPUtils.normalization_lowercase(doc.raw_text)
+            preparing_text = NLPUtils.normalization_users(preparing_text, "@user")
+            preparing_text = NLPUtils.tokenize_tweet(preparing_text, a_preserve_case=False, a_reduce_len=False, a_strip_handles=False)
+            if PropertiesManager.get_prop_value(PropertiesNames.NORM_STOPPER):
+                preparing_text = NLPUtils.stopper(preparing_text, PropertiesManager.get_prop_value(PropertiesNames.LANGUAGE_TRAINING))
+            if PropertiesManager.get_prop_value(PropertiesNames.NORM_STEMMER):
+                preparing_text = NLPUtils.stemmer(preparing_text, PropertiesManager.get_prop_value(PropertiesNames.LANGUAGE_TRAINING))
+            
+            doc.process_text = preparing_text
+                
+    
     def make_feature_space_training(self, external_knowledge=None):
+        
+        self.__feature_engineering(self.__training_corpus)
         
         count_vectorizer = CountVectorizer()
         docs = [self.__training_corpus.get_document(doc_id).process_text for doc_id in self.__training_corpus.corpus]
+        
         self.__features_training = count_vectorizer.fit_transform(docs)
         tfidf_transformer = TfidfTransformer()
         self.__features_training = tfidf_transformer.fit_transform(self.__features_training)
@@ -65,6 +86,8 @@ class SVMClassification(ABSClassification):
         
     def make_feature_space_evaluation(self, external_knowledge=None):
         
+        self.__feature_engineering(self.__evaluation_corpus)
+        
         docs = [self.__evaluation_corpus.get_document(doc_id).process_text for doc_id in self.__evaluation_corpus.corpus]
         self.__features_test = self.__features_transformers[0].transform(docs)
         for transformer in self.__features_transformers[1:]:
@@ -72,7 +95,7 @@ class SVMClassification(ABSClassification):
         
     def training(self):
         docs_labels = [self.__training_corpus.get_document(doc_id).sparse_label for doc_id in self.__training_corpus.corpus]
-        self.__classifier = sksvm()
+        self.__classifier = SVC()
         self.__classifier.fit(self.__features_training, docs_labels)
         
     def evaluation(self):

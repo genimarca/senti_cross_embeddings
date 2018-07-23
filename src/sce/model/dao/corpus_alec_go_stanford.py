@@ -9,7 +9,6 @@ Created on 20 jul. 2018
 from sce.model.dao.abs_corpus import ABSCorpus
 from sce.model.document import Document
 from sce.model.bilabel_experiments import BilabelExperiments
-from sce.model.trilabel_experiments import TrilabelExperiments
 
 class CorpusAlecGoStanford(ABSCorpus):
     '''

@@ -44,7 +44,6 @@ class ABSClassification(metaclass=ABCMeta):
     def predictions(self):
         pass
     
-    
     @abstractmethod
     def make_feature_space_training(self, external_knowledge=None):
         pass
