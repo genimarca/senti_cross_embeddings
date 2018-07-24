@@ -78,15 +78,29 @@ class ModelPipeline:
         self.__classifier.training_corpus = self.__training_corpus
         self.__classifier.random_seed = self.__random_seed
         self.__classifier.make_feature_space_training(external_knowledge=self.__embeddings_handler)
+        print("Begin: Training")
         self.__classifier.training()
+        print("End: Training")
         
             
     def classification(self):
         self.__classifier.evaluation_corpus = self.__evaluation_corpus
         self.__classifier.make_feature_space_evaluation(external_knowledge=self.__embeddings_handler)
+        print("Begin: Evaluation")
         self.__classifier.evaluation()
+        print("End: Test")
     
     def results(self):
+        
+        corpus_training_size_str = "Train_size:\t {}".format(self.__training_corpus.get_size())
+        training_doc_x_class_str = "\n".join(["Train_size {}:\t{}".format(self.__allow_labels.get_label_name(label_index),self.__training_corpus.doc_x_labels[label_index]) for label_index in sorted(self.__allow_labels.label_index())])
+        corpus_training_size_str = "{}\n{}".format(corpus_training_size_str,training_doc_x_class_str)
+        print(corpus_training_size_str)
+        
+        corpus_evaluation_size_str = "Eva_size:\t {}".format(self.__evaluation_corpus.get_size())
+        evaluation_doc_x_class_str = "\n".join(["Eva_size {}:\t{}".format(self.__allow_labels.get_label_name(label_index),self.__evaluation_corpus.doc_x_labels[label_index]) for label_index in sorted(self.__allow_labels.label_index())])
+        corpus_evaluation_size_str = "\n\n{}\n{}".format(corpus_evaluation_size_str,evaluation_doc_x_class_str)
+        print(corpus_evaluation_size_str)
         
         real_labels = [self.__evaluation_corpus.get_document(doc_id).sparse_label for doc_id in self.__evaluation_corpus.corpus]
         predictions = self.__classifier.predictions

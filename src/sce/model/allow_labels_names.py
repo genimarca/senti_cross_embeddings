@@ -18,4 +18,4 @@ class AllowLabelsNames(Enum):
 
     BILABEL = "sce.model.bilabel_experiments.BilabelExperiments"
     
-    TRILABEL = "sce.model.trilabel_experiments.TriLabelExperiments"
+    TRILABEL = "sce.model.trilabel_experiments.TrilabelExperiments"

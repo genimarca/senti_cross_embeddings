@@ -78,7 +78,6 @@ class SVMClassification(ABSClassification):
                 preparing_text = NLPUtils.stopper(preparing_text, PropertiesManager.get_prop_value(PropertiesNames.LANGUAGE_TRAINING))
             if PropertiesManager.get_prop_value(PropertiesNames.NORM_STEMMER):
                 preparing_text = NLPUtils.stemmer(preparing_text, PropertiesManager.get_prop_value(PropertiesNames.LANGUAGE_TRAINING))
-            print(preparing_text)
             doc.process_text = preparing_text
                 
     

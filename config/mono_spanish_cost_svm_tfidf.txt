@@ -1,0 +1,15 @@
+ENCODING=utf-8
+RANDOM_SEED=7
+LANGUAGE_TRAINING=spanish
+LANGUAGE_TEST=spanish
+CORPUS_TRAINING_NAME=COST
+CORPUS_TRAINING_PATH=/media/data/geniugr_data/Dropbox/investigacion/resources/corpus/COST/cost_train67.csv
+CORPUS_TEST_NAME=COST
+CORPUS_TEST_PATH=/media/data/geniugr_data/Dropbox/investigacion/resources/corpus/COST/cost_test33.csv
+EMBEDDNGS_NAME=
+EMBEDINGS_PATH=
+ALLOW_LABELS_NAME=BILABEL
+CLASSIFICATION_NAME=SVM
+NORM_STOPPER=YES
+NORM_STEMMER=YES
+OUTPUT_FILE_PATH=

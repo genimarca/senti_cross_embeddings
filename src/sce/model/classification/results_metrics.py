@@ -23,7 +23,7 @@ class ResultsMetrics:
     
     @staticmethod
     def precision_x_class(real_labels, pred_labels, allow_labels):
-        return {al: sk_metrics.precision_score(real_labels, pred_labels, pos_label=al) for al in allow_labels.label_index()}
+        return {al: sk_metrics.precision_score(real_labels, pred_labels, labels=[al], average=None)[0] for al in allow_labels.label_index()}
     
     @staticmethod
     def macro_precision(real_labels, pred_labels):
@@ -31,7 +31,7 @@ class ResultsMetrics:
     
     @staticmethod
     def recall_x_class(real_labels, pred_labels, allow_labels):
-        return {al: sk_metrics.recall_score(real_labels, pred_labels, pos_label=al) for al in allow_labels.label_index()}
+        return {al: sk_metrics.recall_score(real_labels, pred_labels, labels=[al], average=None)[0] for al in allow_labels.label_index()}
     
     @staticmethod
     def macro_recall(real_labels, pred_labels):
@@ -39,7 +39,7 @@ class ResultsMetrics:
     
     @staticmethod
     def f1_x_class(real_labels, pred_labels, allow_labels):
-        return {al: sk_metrics.f1_score(real_labels, pred_labels, pos_label=al) for al in allow_labels.label_index()}
+        return {al: sk_metrics.f1_score(real_labels, pred_labels, labels=[al], average=None)[0] for al in allow_labels.label_index()}
     
     @staticmethod
     def macro_f1(real_labels, pred_labels):

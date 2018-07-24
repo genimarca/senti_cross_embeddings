@@ -21,7 +21,7 @@ class CorpusInterTASS(ABSCorpus):
     '''
 
 
-    def __init__(self, allow_labels=BilabelExperiments()):
+    def __init__(self, allow_labels=None):
         '''
         Sole constructor
         '''
@@ -29,7 +29,7 @@ class CorpusInterTASS(ABSCorpus):
         self.__encoding = ""
         self.__doc_ids = []
         self.__allow_labels = allow_labels
-        self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
+        self.__doc_x_labels = None
         
         
     @property
@@ -39,6 +39,7 @@ class CorpusInterTASS(ABSCorpus):
     @allow_labels.setter
     def allow_labels(self, a_allow_lables):
         self.__allow_labels = a_allow_lables
+        self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
     
     @property
     def encoding(self):

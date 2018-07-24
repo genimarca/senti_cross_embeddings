@@ -23,7 +23,7 @@ class CorpusGeneralTASS(ABSCorpus):
     '''
 
 
-    def __init__(self, allow_labels=BilabelExperiments()):
+    def __init__(self, allow_labels=None):
         '''
         Constructor
         '''
@@ -31,7 +31,7 @@ class CorpusGeneralTASS(ABSCorpus):
         self.__encoding = ""
         self.__doc_ids = []
         self.__allow_labels = allow_labels
-        self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
+        self.__doc_x_labels = None
         
         
     @property
@@ -41,6 +41,7 @@ class CorpusGeneralTASS(ABSCorpus):
     @allow_labels.setter
     def allow_labels(self, a_allow_labels):
         self.__allow_labels = a_allow_labels
+        self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
     
     @property
     def encoding(self):
@@ -82,7 +83,7 @@ class CorpusGeneralTASS(ABSCorpus):
             tweet.raw_label = self.__allow_labels.get_label_name(label_index)
             tweet.sparse_label = label_index
             self.__doc_x_labels[label_index]+=1
-            self.__corpus[label_index] = tweet
+            self.__corpus[raw_tweet["id"]] = tweet
     
     def load(self, path):
         """

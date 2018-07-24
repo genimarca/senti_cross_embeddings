@@ -5,7 +5,7 @@ Created on 13 jul. 2018
 
 @author: Eugenio Martínez Cámara
 '''
-
+import sys
 class CorpusGeneralTASSXML:
     '''
     '''
@@ -45,6 +45,9 @@ class CorpusGeneralTASSXML:
         self.__tag_end = tag
         if self.__tag is not None and tag in self.__target_tags:
             self.__tag = None
+        elif tag == "tweet":
+            self.__full_doc = True
+            
         
     
     def __get_tweetid(self, data):
@@ -59,14 +62,13 @@ class CorpusGeneralTASSXML:
         
         if self.__tag == "value" and self.__tag_end != "entity":
             self.__doc["label"] = data
-            self.__full_doc = True
+            
         
         
     
     def data(self, data):
-        data = None
         if self.__tag is not None:
-            method_to_call = getattr(self, self.__target_tags[self.__tag], None)
+            method_to_call = getattr(self,"_"+__class__.__name__+self.__target_tags[self.__tag], None)
             if method_to_call is not None:
                 method_to_call(data)
             
