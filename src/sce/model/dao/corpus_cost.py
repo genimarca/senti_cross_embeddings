@@ -11,6 +11,7 @@ from sce.model.abs_allow_labels import ABSAllowLabel
 from sce.model.bilabel_experiments import BilabelExperiments
 from sce.model.trilabel_experiments import TrilabelExperiments
 
+from collections import OrderedDict
 
 class CorpusCOST(ABSCorpus):
     '''
@@ -22,10 +23,10 @@ class CorpusCOST(ABSCorpus):
         '''
         Sole constructor
         '''
-        self.__corpus = {}
+        self.__corpus = OrderedDict()
         self.__encoding = ""
         self.__doc_ids = []
-        self.__SEP_CHAR = ","
+        self.__SEP_CHAR = "\",\""
         self.__allow_labels = allow_labels
         self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
         
@@ -71,17 +72,18 @@ class CorpusCOST(ABSCorpus):
     def __add_document(self, raw_tweet):
         
         raw_label = None
-        if raw_tweet[0] == "0":
+        if raw_tweet[0][1:] == "0":
             raw_label = "negative"
-        elif raw_tweet[0] == "1":
+        elif raw_tweet[0][1:] == "1":
             raw_label = "positive"
             
         label_index = self.__allow_labels.get_label_index(raw_label)
         if label_index is not None:
             tweet = Document()
-            tweet.id = raw_tweet[1][1:-1]
-            tweet.raw_text = raw_tweet[-1][1:-1]
+            tweet.id = raw_tweet[1]
+            tweet.raw_text = raw_tweet[-1][:-1]
             tweet.raw_label = self.__allow_labels.get_label_name(label_index)
+            tweet.sparse_label = label_index
             self.__doc_x_labels[label_index] += 1
             self.__corpus[tweet.id] = tweet
         
@@ -91,6 +93,7 @@ class CorpusCOST(ABSCorpus):
         own_split = str.split
         own_strip = str.strip
         with open(path, encoding=self.__encoding) as corpus_file:
+            corpus_file.readline()
             for line in corpus_file:
                 fields = own_split(own_strip(line), self.__SEP_CHAR)
                 self.__add_document(fields)

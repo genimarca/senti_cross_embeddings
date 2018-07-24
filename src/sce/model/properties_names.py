@@ -13,6 +13,8 @@ class PropertiesNames(object):
     classdocs
     '''
     
+    RANDOM_SEED = "RANDOM_SEED"
+    
     ENCODING = "ENCODING"
     
     LANGUAGE_TRAINING = "LANGUAGE_TRAINING"

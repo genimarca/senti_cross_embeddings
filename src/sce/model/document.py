@@ -14,7 +14,7 @@ class Document:
         '''
         Constructor
         '''
-        self.id = ""
+        self.__id = ""
         self.__raw_text = ""
         self.__process_text = []
         self.__raw_label = ""
@@ -24,11 +24,11 @@ class Document:
         
     @property
     def id(self):
-        return self.id
+        return self.__id
     
     @id.setter
     def id(self, a_id):
-        self.id = a_id
+        self.__id = a_id
     
     @property
     def raw_text(self):

@@ -11,6 +11,8 @@ from sce.model.abs_allow_labels import ABSAllowLabel
 from sce.model.bilabel_experiments import BilabelExperiments
 from sce.model.trilabel_experiments import TrilabelExperiments
 
+from collections import OrderedDict
+
 
 class CorpusSentipolc(ABSCorpus):
     '''
@@ -22,7 +24,7 @@ class CorpusSentipolc(ABSCorpus):
         '''
         Sole constructor
         '''
-        self.__corpus = {}
+        self.__corpus = OrderedDict()
         self.__encoding = ""
         self.__doc_ids = []
         self.__SEP_CHAR = ","
@@ -82,6 +84,7 @@ class CorpusSentipolc(ABSCorpus):
             tweet.id = raw_tweet[0][1:-1]
             tweet.raw_text = raw_tweet[-1][1:-1]
             tweet.raw_label = self.__allow_labels.get_label_name(label_index)
+            tweet.sparse_label = label_index
             self.__doc_x_labels[label_index] += 1
             self.__corpus[tweet.id] = tweet
         

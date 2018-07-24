@@ -21,6 +21,16 @@ class ABSClassification(metaclass=ABCMeta):
         
     @property
     @abstractmethod
+    def random_seed(self):
+        pass
+    
+    @random_seed.setter
+    @abstractmethod
+    def random_seed(self, a_random_seed):
+        pass
+    
+    @property
+    @abstractmethod
     def training_corpus(self):
         pass
     

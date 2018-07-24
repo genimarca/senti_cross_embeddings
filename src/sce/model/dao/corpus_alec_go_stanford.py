@@ -10,6 +10,8 @@ from sce.model.dao.abs_corpus import ABSCorpus
 from sce.model.document import Document
 from sce.model.bilabel_experiments import BilabelExperiments
 
+from collections import OrderedDict
+
 class CorpusAlecGoStanford(ABSCorpus):
     '''
     classdocs
@@ -20,7 +22,7 @@ class CorpusAlecGoStanford(ABSCorpus):
         '''
         Sole constructor
         '''
-        self.__corpus = {}
+        self.__corpus = OrderedDict()
         self.__encoding = ""
         self.__SEP_CHAR = ","
         self.__allow_labels = allow_labels

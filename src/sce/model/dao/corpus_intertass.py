@@ -13,6 +13,8 @@ from xml.etree.ElementTree import XMLParser
 from sce.model.bilabel_experiments import BilabelExperiments
 from sce.model.trilabel_experiments import TrilabelExperiments
 
+from collections import OrderedDict
+
 class CorpusInterTASS(ABSCorpus):
     '''
     classdocs
@@ -23,7 +25,7 @@ class CorpusInterTASS(ABSCorpus):
         '''
         Sole constructor
         '''
-        self.__corpus = {}
+        self.__corpus = OrderedDict()
         self.__encoding = ""
         self.__doc_ids = []
         self.__allow_labels = allow_labels

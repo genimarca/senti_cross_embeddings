@@ -25,6 +25,7 @@ class PropertiesManager:
             own_strip = str.strip
             for prop in properties_file:
                 fields = own_split(prop, cls.FIELDS_SEPARATOR)
+                fields[-1] = own_strip(fields[-1])
                 #Multi-value property
                 if(cls.re_multi_value_properties.search(fields[1]) != None):
                     cls.properties[own_strip(fields[0])] = [own_strip(value) for value in cls.re_multi_value_properties.split(fields[1])]
@@ -33,7 +34,7 @@ class PropertiesManager:
                 elif(fields[1] == "NO"):
                     cls.properties[own_strip(fields[0])] = False
                 else:
-                    cls.properties[own_strip(fields[0])] = own_strip(fields[1])
+                    cls.properties[own_strip(fields[0])] = fields[1]
                     if (len(cls.properties[own_strip(fields[0])]) == 0):
                         cls.properties[own_strip(fields[0])] = None
                         

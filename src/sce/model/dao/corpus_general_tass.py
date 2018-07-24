@@ -15,6 +15,8 @@ from sce.model.abs_allow_labels import ABSAllowLabel
 from sce.model.bilabel_experiments import BilabelExperiments
 from sce.model.trilabel_experiments import TrilabelExperiments
 
+from collections import OrderedDict
+
 class CorpusGeneralTASS(ABSCorpus):
     '''
     General TASS corpus class
@@ -25,7 +27,7 @@ class CorpusGeneralTASS(ABSCorpus):
         '''
         Constructor
         '''
-        self.__corpus = {}
+        self.__corpus = OrderedDict()
         self.__encoding = ""
         self.__doc_ids = []
         self.__allow_labels = allow_labels

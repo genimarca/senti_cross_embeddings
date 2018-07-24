@@ -29,6 +29,7 @@ class ModelPipeline:
         self.__embeddings_handler = None
         self.__allow_labels = None
         self.__classifier = None
+        self.__random_seed = None
         
         
     def initialization(self, properties_file_path):
@@ -36,6 +37,10 @@ class ModelPipeline:
         
         
         self.__encoding = PropertiesManager.get_prop_value(PropertiesNames.ENCODING)
+        
+        self.__random_seed = PropertiesManager.get_prop_value(PropertiesNames.RANDOM_SEED)
+        if self.__random_seed is not None:
+            self.__random_seed = int(self.__random_seed)
         
         allow_labels_name = PropertiesManager.get_prop_value(PropertiesNames.ALLOW_LABELS_NAME)
         self.__allow_labels = FactoryAllowLabels.creator(allow_labels_name)
@@ -71,6 +76,7 @@ class ModelPipeline:
     
     def training(self):
         self.__classifier.training_corpus = self.__training_corpus
+        self.__classifier.random_seed = self.__random_seed
         self.__classifier.make_feature_space_training(external_knowledge=self.__embeddings_handler)
         self.__classifier.training()
         
@@ -82,13 +88,12 @@ class ModelPipeline:
     
     def results(self):
         
-        real_labels = [self.__evaluation_corpus.get_document(doc_id).real_label for doc_id in self.__evaluation_corpus.corpus]
+        real_labels = [self.__evaluation_corpus.get_document(doc_id).sparse_label for doc_id in self.__evaluation_corpus.corpus]
         predictions = self.__classifier.predictions
         confusion_matrix = ResultsMetrics.confusion_matrix(real_labels, predictions)
-        
-        confusion_matrix_string = ["Pred_{}".format(self.__allow_labels.get_label_name(label_index)) for label_index in sorted(self.__allow_labels.label_index)]
-        confusion_matrix_string = "\t".join(confusion_matrix_string)
-        confusion_matrix_string = "%s\n%s".format(confusion_matrix_string, "\n".join(["\t".join([str(j) for j in confusion_matrix[i]]) for i in range(len(confusion_matrix))]))
+        confusion_matrix_string = ["Pred_{}".format(self.__allow_labels.get_label_name(label_index)) for label_index in sorted(self.__allow_labels.label_index())]
+        confusion_matrix_string = "\t" + "\t".join(confusion_matrix_string)
+        confusion_matrix_string = "{}\n{}".format(confusion_matrix_string, "\n".join(["R_" + self.__allow_labels.get_label_name(i) + "\t" + "\t".join([str(j) for j in confusion_matrix[i]]) for i in range(len(confusion_matrix))]))
         
         precision_x_class = ResultsMetrics.precision_x_class(real_labels, predictions, self.__allow_labels)
         precision_x_class_string = "\n".join(["Prec. {}: {}".format(self.__allow_labels.get_label_name(label_index), precision_x_class[label_index]) for label_index in precision_x_class])
@@ -99,16 +104,16 @@ class ModelPipeline:
         
         macro_precision_str = "Macro-Precision: {}".format(ResultsMetrics.macro_precision(real_labels, predictions))
         macro_recall_str = "Macro-Recall: {}".format(ResultsMetrics.macro_recall(real_labels,predictions))
-        macro_f1_str = "Macro-F1: {}".fomrat(ResultsMetrics.macro_f1(real_labels, predictions))
+        macro_f1_str = "Macro-F1: {}".format(ResultsMetrics.macro_f1(real_labels, predictions))
         accuracy_str = "Accuracy: {}".format(ResultsMetrics.accuracy(real_labels, predictions))
         
         
-        print(confusion_matrix_string+"\n")
-        print(precision_x_class_string+"\n")
-        print(recall_x_class_str+"\n")
-        print(f1_x_class_str+"\n")
-        print(macro_precision_str+"\n")
-        print(macro_recall_str+"\n")
-        print(macro_f1_str+"\n")
-        print(accuracy_str+"\n")
+        print("\n"+confusion_matrix_string+"\n")
+        print(precision_x_class_string)
+        print(recall_x_class_str)
+        print(f1_x_class_str)
+        print(macro_precision_str)
+        print(macro_recall_str)
+        print(macro_f1_str)
+        print(accuracy_str)
         
