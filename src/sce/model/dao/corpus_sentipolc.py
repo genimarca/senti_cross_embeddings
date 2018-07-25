@@ -29,7 +29,7 @@ class CorpusSentipolc(ABSCorpus):
         self.__doc_ids = []
         self.__SEP_CHAR = ","
         self.__allow_labels = allow_labels
-        self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
+        self.__doc_x_labels = None
         
         
     @property
@@ -39,6 +39,7 @@ class CorpusSentipolc(ABSCorpus):
     @allow_labels.setter
     def allow_labels(self, a_allow_labels):
         self.__allow_labels = a_allow_labels
+        self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
     
     @property
     def encoding(self):
@@ -73,10 +74,13 @@ class CorpusSentipolc(ABSCorpus):
     def __add_document(self, raw_tweet):
         
         raw_label = None
-        if raw_tweet[3] == "1":
-            raw_label = "negative"
-        elif raw_tweet[2] == "1":
-            raw_label = "positive"
+        if raw_tweet[1] == "1" or raw_tweet[1] == "\"1\"":
+            if (raw_tweet[3] == "1" or raw_tweet[3] == "\"1\"") and (raw_tweet[2] == "0" or raw_tweet[2] == "\"0\""):
+                raw_label = "negative"
+            elif (raw_tweet[2] == "1" or raw_tweet[2] == "\"1\"") and (raw_tweet[3] == "0" or raw_tweet[3] == "\"0\""):
+                raw_label = "positive"
+            elif (raw_tweet[3] == "0" or raw_tweet[3] == "\"0\"") and (raw_tweet[2] == "0" or raw_tweet[2] == "\"0\""):
+                raw_label = "neutral" 
             
         label_index = self.__allow_labels.get_label_index(raw_label)
         if label_index is not None:
@@ -87,6 +91,7 @@ class CorpusSentipolc(ABSCorpus):
             tweet.sparse_label = label_index
             self.__doc_x_labels[label_index] += 1
             self.__corpus[tweet.id] = tweet
+            self.__doc_ids.append(tweet.id)
         
     def load(self, path):
         """
@@ -94,11 +99,12 @@ class CorpusSentipolc(ABSCorpus):
         own_split = str.split
         own_strip = str.strip
         with open(path, encoding=self.__encoding) as corpus_file:
+            corpus_file.readline()
             for line in corpus_file:
                 fields = own_split(own_strip(line), self.__SEP_CHAR)
                 self.__add_document(fields)
                     
-                
+        
         
     def get_document(self, a_id):
         """
