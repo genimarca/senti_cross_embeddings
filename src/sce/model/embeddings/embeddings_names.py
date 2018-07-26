@@ -13,4 +13,6 @@ class EmbeddingsNames(Enum):
 
     GLOVE = "sce.model.embeddings.embeddings_glove.EmbeddingsGlove"
     
-    CROSS_COLLADOS = "sce.model.embeddings.embeddings_cross_collados.EmbeddingsCrossCollados"
+    COLLADOS = "sce.model.embeddings.embeddings_collados.EmbeddingsCollados"
+    
+    SPANISH = "sce.model.embeddings.embeddings_spanish.EmbeddingsSpanish"

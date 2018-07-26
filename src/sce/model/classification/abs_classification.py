@@ -54,6 +54,17 @@ class ABSClassification(metaclass=ABCMeta):
     def predictions(self):
         pass
     
+    @property
+    @abstractmethod
+    def allow_labels(self):
+        pass
+    
+    @allow_labels.setter
+    @abstractmethod
+    def allow_labels(self, a_allow_labels):
+        pass
+        
+    
     @abstractmethod
     def make_feature_space_training(self, external_knowledge=None):
         pass
@@ -69,5 +80,7 @@ class ABSClassification(metaclass=ABCMeta):
     @abstractmethod
     def evaluation(self):
         pass
+    
+    
     
     

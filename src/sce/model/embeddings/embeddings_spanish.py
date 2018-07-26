@@ -7,9 +7,8 @@ Created on 21 jul. 2018
 """
 from sce.model.embeddings.abs_word_embeddings import ABSWordEmbeddings
 from numpy import array as np_array
-import re
 
-class EmbeddingsGlove(ABSWordEmbeddings):
+class EmbeddingsSpanish(ABSWordEmbeddings):
     '''
     classdocs
     '''
@@ -21,27 +20,6 @@ class EmbeddingsGlove(ABSWordEmbeddings):
         self.__word_indexes = {}
         self.__word_embeddings = []
         self.__SEP_CHAR = " "
-        self.__re_user = re.compile(r"""@user""")
-        self.__re_url = re.compile(r"""https?:\/\/\S+\b|www\.(\w+\.)+\S*""")
-        self.__re_smile = re.compile(r"""[8:=;]{1}['`\-]?[)d]+|[)d]+[8:=;]{1}['`\-]?""")
-        self.__re_lolface = re.compile(r"""[8:=;]{1}['`\-]?p+""")
-        self.__re_sadface = re.compile(r"""[8:=;]{1}['`\-]?\(+|\)+[8:=;]{1}['`\-]?""")
-        self.__re_neutralface = re.compile(r"""[8:=;]{1}['`\-][\/|l*]""")
-        self.__re_heart = re.compile(r"""<3""")
-        self.__re_numbers = re.compile(r"""[-+]?[.\d]*[\d]+[:,.\d]*""")
-        self.__re_hashtag = re.compile(r"""(?:\#+[\w_]+[\w\'_\-]*[\w_]+)""")
-        
-        self.__re_substitutions = {
-            "<user>":self.__re_user,
-            "<url>":self.__re_url,
-            "<smile>":self.__re_smile,
-            "<lolface>":self.__re_lolface,
-            "<sadface>":self.__re_sadface,
-            "<neutralface>":self.__re_neutralface,
-            "<heart>":self.__re_heart,
-            "<number>":self.__re_numbers,
-            "<hashtag>":self.__re_hashtag
-            }
         
         
     

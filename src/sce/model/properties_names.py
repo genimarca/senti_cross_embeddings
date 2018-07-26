@@ -33,6 +33,8 @@ class PropertiesNames(object):
     
     EMBEDDINGS_PATH = "EMBEDINGS_PATH"
     
+    EMBEDDINGS_MAX_WORDS = "EMBEDDINGS_MAX_WORDS"
+    
     ALLOW_LABELS_NAME = "ALLOW_LABELS_NAME"
     
     CLASSIFICATION_NAME = "CLASSIFICATION_NAME"
@@ -41,6 +43,11 @@ class PropertiesNames(object):
     
     NORM_STEMMER = "NORM_STEMMER"
     
+    NN_BATCH_SIZE = "NN_BATCH_SIZE"
+    
+    NN_EPOCH_SIZE = "NN_EPOCH_SIZE"
+    
     OUTPUT_FILE_PATH = "OUTPUT_FILE_PATH"
+    
     
     

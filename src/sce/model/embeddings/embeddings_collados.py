@@ -6,13 +6,13 @@ Created on 21 jul. 2018
 :author: Eugenio Martínez Cámara <emcamara@decsai.ugr.es>
 """
 from sce.model.embeddings.abs_word_embeddings import ABSWordEmbeddings
-
-class EmbeddingsCrossCollados(ABSWordEmbeddings):
+from numpy import array as np_array
+class EmbeddingsCollados(ABSWordEmbeddings):
     '''
     classdocs
     '''
 
-    def __init__(self, params):
+    def __init__(self):
         '''
         Sole constructor
         '''
@@ -69,19 +69,27 @@ class EmbeddingsCrossCollados(ABSWordEmbeddings):
         
         fields = line.partition(self.__SEP_CHAR)
         word = fields[0].strip()
-        if word in vocabulary:
-            emb_values = [float(x) for x in fields[-1].split(self.__SEP_CHAR)]
+        own_strip = str.strip
+        if vocabulary is not None:
+            if word in vocabulary:
+                emb_values = np_array([float(x) for x in fields[-1].split(self.__SEP_CHAR)])
+                self.__word_indexes[word] = len(self.__word_embeddings)
+                self.__word_embeddings.append(emb_values)
+        else:
+            emb_values = np_array([float(x) for x in own_strip(fields[-1]).split(self.__SEP_CHAR)])
             self.__word_indexes[word] = len(self.__word_embeddings)
             self.__word_embeddings.append(emb_values)
     
     def __load_full(self, path, encoding):
         with open(path, "r", encoding=encoding) as emb_file:
+            emb_file.readline()
             for line in emb_file:
                 self.__add_vector(line)
                 
                 
     def __load_vocabulary(self, path, encoding, vocabulary):
         with open(path, "r", encoding=encoding) as emb_file:
+            emb_file.readline()
             for line in emb_file:
                 self.__add_vector(line, vocabulary)
     
@@ -89,7 +97,8 @@ class EmbeddingsCrossCollados(ABSWordEmbeddings):
         own_strip = str.strip
         with open(path, "r", encoding=encoding) as emb_file:
             i = 0
-            line = own_strip(emb_file.readline())
+            emb_file.readline()
+            line = emb_file.readline()
             while line and i<max_words:
                 self.__add_vector(line)
                 i+=1
@@ -100,6 +109,7 @@ class EmbeddingsCrossCollados(ABSWordEmbeddings):
         own_strip = str.strip
         with open(path, "r", encoding=encoding) as emb_file:
             i = 0
+            emb_file.readline()
             line = own_strip(emb_file.readline())
             while line and i<max_words:
                 self.__add_vector(line, vocabulary)

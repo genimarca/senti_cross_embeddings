@@ -35,6 +35,7 @@ class SVMClassification(ABSClassification):
         self.__features_test = None
         self.__classifier = None
         self.__features_transformers = []
+        self.__allow_labels = None
         
         
     @property
@@ -65,6 +66,15 @@ class SVMClassification(ABSClassification):
     @property
     def predictions(self):
         return self.__predictions
+    
+    
+    @property
+    def allow_labels(self):
+        return self.__allow_labels
+    
+    @allow_labels.setter
+    def allow_labels(self, a_allow_labels):
+        self.__allow_labels = a_allow_labels
     
     
     def __feature_engineering(self, corpus):

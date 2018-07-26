@@ -18,4 +18,6 @@ class ClassificationNames(Enum):
 
     SVM = "sce.model.classification.svm_classification.SVMClassification"
     
+    BiLSTM = "sce.model.classification.bilstm_classification.BiLSTMClassficiation"
+    
     

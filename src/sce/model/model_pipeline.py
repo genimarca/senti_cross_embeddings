@@ -30,6 +30,7 @@ class ModelPipeline:
         self.__allow_labels = None
         self.__classifier = None
         self.__random_seed = None
+        self.__external_knowledge = {}
         
         
     def initialization(self, properties_file_path):
@@ -71,13 +72,15 @@ class ModelPipeline:
         embeddings_name = PropertiesManager.get_prop_value(PropertiesNames.EMBEDDINGS_NAME)
         if embeddings_name is not None:
             self.__embeddings_handler = FactoryEmbeddings.creator(embeddings_name)
+            self.__external_knowledge["embeddings"] = self.__embeddings_handler
         
     
     
     def training(self):
         self.__classifier.training_corpus = self.__training_corpus
         self.__classifier.random_seed = self.__random_seed
-        self.__classifier.make_feature_space_training(external_knowledge=self.__embeddings_handler)
+        self.__classifier.allow_labels = self.__allow_labels
+        self.__classifier.make_feature_space_training(external_knowledge=self.__external_knowledge)
         print("Begin: Training")
         self.__classifier.training()
         print("End: Training")
@@ -85,7 +88,7 @@ class ModelPipeline:
             
     def classification(self):
         self.__classifier.evaluation_corpus = self.__evaluation_corpus
-        self.__classifier.make_feature_space_evaluation(external_knowledge=self.__embeddings_handler)
+        self.__classifier.make_feature_space_evaluation(external_knowledge=self.__external_knowledge)
         print("Begin: Evaluation")
         self.__classifier.evaluation()
         print("End: Test")
