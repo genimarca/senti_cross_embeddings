@@ -13,7 +13,7 @@ from sce.model.bilabel_experiments import BilabelExperiments
 from sce.model.trilabel_experiments import TrilabelExperiments
 
 from collections import OrderedDict
-import numpy as np
+from numpy.random import shuffle as np_shuffle
 
 class CorpusSemEvalTwitter(ABSCorpus):
     '''
@@ -91,6 +91,16 @@ class CorpusSemEvalTwitter(ABSCorpus):
             self.__doc_ids.append(own_strip(raw_tweet[0]))
     
     
+    def __shuffled(self):
+        
+        shuffel_corpus = OrderedDict()
+        shuffe_keys = list(self.__corpus.keys())
+        np_shuffle(shuffe_keys)
+        for key in shuffe_keys:
+            shuffel_corpus[key] = self.__corpus.get(key)
+        self.__corpus = shuffel_corpus
+        
+    
     def load(self, path):
         """
         """
@@ -100,6 +110,8 @@ class CorpusSemEvalTwitter(ABSCorpus):
             for line in corpus_file:
                 fields = own_split(own_strip(line), self.__SEP_CHAR)
                 self.__add_document(fields)
+                
+        self.__shuffled()
                 
         
     def get_document(self, a_id):

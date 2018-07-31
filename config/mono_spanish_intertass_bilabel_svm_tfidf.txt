@@ -1,0 +1,15 @@
+ENCODING=utf-8
+RANDOM_SEED=7
+LANGUAGE_TRAINING=spanish
+LANGUAGE_TEST=spanish
+CORPUS_TRAINING_NAME=INTERTASS
+CORPUS_TRAINING_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/corpora/sentiment_analysis/intertass/intertass-ES-train-tagged.xml
+CORPUS_TEST_NAME=GENERAL_TASS
+CORPUS_TEST_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/corpora/sentiment_analysis/intertass/intertass-ES-test-tagged.xml
+EMBEDDNGS_NAME=
+EMBEDINGS_PATH=
+ALLOW_LABELS_NAME=BILABEL
+CLASSIFICATION_NAME=SVM
+NORM_STOPPER=NO
+NORM_STEMMER=YES
+OUTPUT_FILE_PATH=

@@ -44,6 +44,8 @@ class BiLSTMClassficiation(ABSClassification):
         self.__max_length = 0
         self.__batch_size = 0
         self.__allow_labels = None
+        self.__oov_vector = None
+        self.__padding_vector = None
         
         
     @property
@@ -83,7 +85,6 @@ class BiLSTMClassficiation(ABSClassification):
     def allow_labels(self, a_allow_labels):
         self.__allow_labels = a_allow_labels
     
-    
     def __load_exk_embeddings(self, exk_embeddings_handler):
         
         path = PropertiesManager.get_prop_value(PropertiesNames.EMBEDDINGS_PATH)
@@ -97,10 +98,14 @@ class BiLSTMClassficiation(ABSClassification):
         print("Begin: Loading embeddings")
         exk_embeddings_handler.load(path, encoding, ofset=2, max_words=emb_max_words)
         print("End: Loading embeddings")
-        exk_emb_oov = 2 * 0.1 * np_rand(exk_embeddings_handler.get_vector_embedding_dimension()) - 1
-        exk_embeddings_handler.set_vector_embedding("_OOV_", self.__features_magic_index["OOV"], exk_emb_oov)
-        exk_emb_padding = 2 * 0.1 * np_rand(exk_embeddings_handler.get_vector_embedding_dimension()) - 1
-        exk_embeddings_handler.set_vector_embedding("_PADDING_", self.__features_magic_index["PADDING"], exk_emb_padding)
+        
+        if self.__oov_vector is None:
+            self.__oov_vector = 2 * 0.1 * np_rand(exk_embeddings_handler.get_vector_embedding_dimension()) - 1
+        exk_embeddings_handler.set_vector_embedding("_OOV_", self.__features_magic_index["OOV"], self.__oov_vector)
+        
+        if self.__padding_vector is None:
+            self.__padding_vector = 2 * 0.1 * np_rand(exk_embeddings_handler.get_vector_embedding_dimension()) - 1
+        exk_embeddings_handler.set_vector_embedding("_PADDING_", self.__features_magic_index["PADDING"], self.__padding_vector)
     
     def __init_random_seed(self):
         np_seed(self.__random_seed)
@@ -147,6 +152,7 @@ class BiLSTMClassficiation(ABSClassification):
                         feature_index[word_index] = self.__features_magic_index["OOV"]
             own_features_training_append(feature_index)
             
+        print(self.__features_training[:5])
         self.__features_transformers.append(exk_embeddings_handler)
         
         
@@ -156,7 +162,12 @@ class BiLSTMClassficiation(ABSClassification):
         
         self.__features_test = []
         own_features_evaluation_append = self.__features_test.append
-        exk_embeddnings_handler = self.__features_transformers[0]
+        if external_knowledge is not None and "embeddings_evaluation" in external_knowledge:
+            exk_embeddnings_handler = external_knowledge["embeddings_evaluation"]
+            self.__load_exk_embeddings(exk_embeddnings_handler)
+        else:
+            exk_embeddnings_handler = self.__features_transformers[0]
+        
         for doc_index in self.__evaluation_corpus.corpus:
             doc = self.__evaluation_corpus.get_document(doc_index)
             features_index = self.__max_length * [self.__features_magic_index["PADDING"]]
@@ -168,6 +179,7 @@ class BiLSTMClassficiation(ABSClassification):
                     else:
                         features_index[word_index] = self.__features_magic_index["OOV"]
             own_features_evaluation_append(features_index)
+        print(self.__features_test[:5])
     
     def training(self):
         
@@ -219,7 +231,7 @@ class BiLSTMClassficiation(ABSClassification):
                      epochs=epochs_size,
                      shuffle = False,
                      callbacks=[early_stopping],
-                     verbose=1) 
+                     verbose=0) 
            
     
     def evaluation(self):

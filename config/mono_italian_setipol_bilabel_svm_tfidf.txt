@@ -1,0 +1,15 @@
+ENCODING=utf-8
+RANDOM_SEED=7
+LANGUAGE_TRAINING=italian
+LANGUAGE_TEST=italian
+CORPUS_TRAINING_NAME=SENTIPOLC
+CORPUS_TRAINING_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/corpora/sentiment_analysis/italiano_sentipol/training_set_sentipolc16.csv/training_set_sentipolc16.csv
+CORPUS_TEST_NAME=SENTIPOLC
+CORPUS_TEST_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/corpora/sentiment_analysis/italiano_sentipol/test_set_sentipolc16_gold2000.csv/test_set_sentipolc16_gold2000.csv
+EMBEDDNGS_NAME=
+EMBEDINGS_PATH=
+ALLOW_LABELS_NAME=BILABEL
+CLASSIFICATION_NAME=SVM
+NORM_STOPPER=YES
+NORM_STEMMER=YES
+OUTPUT_FILE_PATH=

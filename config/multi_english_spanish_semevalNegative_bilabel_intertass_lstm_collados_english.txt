@@ -1,11 +1,11 @@
 ENCODING=utf-8
 RANDOM_SEED=7
 LANGUAGE_TRAINING=english
-LANGUAGE_TEST=english
+LANGUAGE_TEST=spanish
 CORPUS_TRAINING_NAME=SEMEVAL
 CORPUS_TRAINING_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/corpora/sentiment_analysis/semeval/2017_English_final/GOLD/Subtask_A/semeval_positive_neutral2016_negative_dev2016_train2015_2013.txt
-CORPUS_TEST_NAME=SEMEVAL
-CORPUS_TEST_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/corpora/sentiment_analysis/semeval/2017_English_final/GOLD/Subtask_A/twitter-2016test-A.txt
+CORPUS_TEST_NAME=INTERTASS
+CORPUS_TEST_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/corpora/sentiment_analysis/intertass/intertass-ES-test-tagged.xml
 EMBEDDNGS_NAME=COLLADOS
 EMBEDINGS_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/embeddings/collados_embeddings/fasttext_english_twitter_100d.vec
 EMBEDDINGS_MAX_WORDS=500000

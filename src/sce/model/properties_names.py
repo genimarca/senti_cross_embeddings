@@ -17,6 +17,12 @@ class PropertiesNames(object):
     
     ENCODING = "ENCODING"
     
+    """
+    It indicates if the experiment is cross_lingual, i.e. the embeddings in training
+    and test are different.
+    """
+    CROSS_LINGUAL_EXPERIMENT = "CROSS_LINGUAL_EXPERIMENT"
+    
     LANGUAGE_TRAINING = "LANGUAGE_TRAINING"
     
     LANGUAGE_TEST = "LANGUAGE_TEST"
@@ -35,7 +41,15 @@ class PropertiesNames(object):
     
     EMBEDDINGS_MAX_WORDS = "EMBEDDINGS_MAX_WORDS"
     
+    EMBEDDINGS_EVALUATION_NAME = "EMBEDDINGS_EVALUATION_NAME"
+    
+    EMBEDDINGS_EVALUATION_PATH = "EMBEDDINGS_EVALUATION_PATH"
+    
+    EMBEDDINGS_EVALUATION_MAX_WORDS = "EMBEDDINGS_EVALUATION_MAX_WORDS"
+    
     ALLOW_LABELS_NAME = "ALLOW_LABELS_NAME"
+    
+    ALLOW_LABELS_EVALUATION_NAME = "ALLOW_LABELS_EVALUATION_NAME"
     
     CLASSIFICATION_NAME = "CLASSIFICATION_NAME"
     
