@@ -231,7 +231,7 @@ class BiLSTMClassficiation(ABSClassification):
                      epochs=epochs_size,
                      shuffle = False,
                      callbacks=[early_stopping],
-                     verbose=0) 
+                     verbose=1) 
            
     
     def evaluation(self):

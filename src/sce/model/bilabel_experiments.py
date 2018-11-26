@@ -19,7 +19,7 @@ class BilabelExperiments(ABSAllowLabel):
         Sole constructor
         '''
         
-        self.__labels = {0:("NEGATIVE",["N","negative"]), 1:("POSITIVE",["P","positive"]), 2:("Not_available", ["Not Available"])}
+        self.__labels = {0:("NEGATIVE",["N","negative"]), 1:("POSITIVE",["P","positive"])}
         self.__number_of_labels = 2
         
         

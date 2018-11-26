@@ -27,9 +27,8 @@ class CorpusGermanSB10(ABSCorpus):
         self.__encoding = ""
         self.__doc_ids = []
         self.__SEP_CHAR = "\t"
-        self.__NOT_TWEET = "Not Available"
         self.__allow_labels = allow_labels
-        self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
+        self.__doc_x_labels = None
         
         
     @property
@@ -39,6 +38,7 @@ class CorpusGermanSB10(ABSCorpus):
     @allow_labels.setter
     def allow_labels(self, a_allow_labels):
         self.__allow_labels = a_allow_labels
+        self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
     
     @property
     def encoding(self):
@@ -71,7 +71,6 @@ class CorpusGermanSB10(ABSCorpus):
         return self.__doc_x_labels
     
     def __add_document(self, raw_tweet):
-        
         label_index = self.__allow_labels.get_label_index(raw_tweet[1]) 
         if label_index is not None:
             tweet = Document()
@@ -90,10 +89,7 @@ class CorpusGermanSB10(ABSCorpus):
         with open(path, encoding=self.__encoding) as corpus_file:
             for line in corpus_file:
                 fields = own_split(own_strip(line), self.__SEP_CHAR)
-                if self.__NOT_TWEET != fields[-1]:
-                    self.__add_document(fields)
-                else:
-                    self.__doc_x_labels[self.__allow_labels.get_label_index(self.__NOT_TWEET)] += 1
+                self.__add_document(fields)
                     
                 
         
