@@ -28,3 +28,5 @@ class CorpusNames(Enum):
     
     COST = "sce.model.dao.corpus_cost.CorpusCOST"
     
+    GERMAN_SB10K = "sce.model.dao.corpus_german_sb10k.CorpusGermanSB10"
+    
