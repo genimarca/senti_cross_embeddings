@@ -1,0 +1,15 @@
+ENCODING=utf-8
+RANDOM_SEED=7
+LANGUAGE_TRAINING=english
+LANGUAGE_TEST=english
+CORPUS_TRAINING_NAME=SEMEVAL
+CORPUS_TRAINING_PATH=/Volumes/Turismundo/Documentos/trabajo/investigacion/recursos/corpus/sentiment_analysis/semeval/2017_English_final/GOLD/Subtask_A/twitter-2016train-A.txt
+CORPUS_TEST_NAME=SEMEVAL
+CORPUS_TEST_PATH=/Volumes/Turismundo/Documentos/trabajo/investigacion/recursos/corpus/sentiment_analysis/semeval/2017_English_final/GOLD/Subtask_A/twitter-2016test-A.txt
+EMBEDDNGS_NAME=
+EMBEDINGS_PATH=
+ALLOW_LABELS_NAME=TRILABEL
+CLASSIFICATION_NAME=SVM
+NORM_STOPPER=NO
+NORM_STEMMER=YES
+OUTPUT_PRED_FILE_PATH=../pred/paper/mono/mono_english_semeval_svm_tfidf.txt

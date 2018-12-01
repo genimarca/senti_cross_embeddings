@@ -1,0 +1,40 @@
+Begin: Loading training corpus
+End: Loading training corpus
+Begin: Loading evaluation corpus
+End: Loading evaluation corpus
+Begin: Training
+End: Training
+Begin: Evaluation
+End: Test
+Train_size:	 5098
+Train_size NEGATIVE:	2543
+Train_size POSITIVE:	1611
+Train_size NEUTRAL:	944
+
+
+Eva_size:	 1305
+Eva_size NEGATIVE:	734
+Eva_size POSITIVE:	316
+Eva_size NEUTRAL:	255
+
+	Pred_NEGATIVE	Pred_POSITIVE	Pred_NEUTRAL
+R_NEGATIVE	537	186	11
+R_POSITIVE	117	195	4
+R_NEUTRAL	149	96	10
+
+Prec. NEGATIVE: 0.6687422166874222
+Prec. POSITIVE: 0.4088050314465409
+Prec. NEUTRAL: 0.4
+Recall NEGATIVE: 0.7316076294277929
+Recall POSITIVE: 0.6170886075949367
+Recall NEUTRAL: 0.0392156862745098
+F1 NEGATIVE: 0.6987638256343527
+F1 POSITIVE: 0.49180327868852464
+F1 NEUTRAL: 0.07142857142857142
+Macro-Precision: 0.4925157493779877
+Macro-Recall: 0.46263730776574646
+Macro-F1: 0.42066522525048294
+Accuracy: 0.5685823754789272
+
+GoodBye
+
