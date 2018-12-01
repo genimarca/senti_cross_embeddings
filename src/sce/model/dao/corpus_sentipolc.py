@@ -79,7 +79,7 @@ class CorpusSentipolc(ABSCorpus):
                 raw_label = "negative"
             elif (raw_tweet[2] == "1" or raw_tweet[2] == "\"1\"") and (raw_tweet[3] == "0" or raw_tweet[3] == "\"0\""):
                 raw_label = "positive"
-            elif (raw_tweet[3] == "0" or raw_tweet[3] == "\"0\"") and (raw_tweet[2] == "0" or raw_tweet[2] == "\"0\""):
+            elif ((raw_tweet[3] == "0" or raw_tweet[3] == "\"0\"") and (raw_tweet[2] == "0" or raw_tweet[2] == "\"0\"")) or ((raw_tweet[3] == "1" or raw_tweet[3] == "\"1\"") and (raw_tweet[2] == "1" or raw_tweet[2] == "\"1\"")):
                 raw_label = "neutral" 
             
         label_index = self.__allow_labels.get_label_index(raw_label)
@@ -102,6 +102,9 @@ class CorpusSentipolc(ABSCorpus):
             corpus_file.readline()
             for line in corpus_file:
                 fields = own_split(own_strip(line), self.__SEP_CHAR)
+                if(len(fields) > 9):
+                    fields[8] = ", ".join([own_strip(f) for f in fields[8:]])
+                    fields = fields[:9] 
                 self.__add_document(fields)
                     
         

@@ -61,7 +61,7 @@ class PropertiesNames(object):
     
     NN_EPOCH_SIZE = "NN_EPOCH_SIZE"
     
-    OUTPUT_FILE_PATH = "OUTPUT_FILE_PATH"
+    OUTPUT_PRED_FILE_PATH = "OUTPUT_PRED_FILE_PATH"
     
     
     

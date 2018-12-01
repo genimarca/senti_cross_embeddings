@@ -20,4 +20,6 @@ class ClassificationNames(Enum):
     
     BiLSTM = "sce.model.classification.bilstm_classification.BiLSTMClassficiation"
     
+    MAJORITY = "sce.model.classification.majority_class_classification.MajorityClassClassification"
+    
     

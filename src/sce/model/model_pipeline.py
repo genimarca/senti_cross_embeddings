@@ -120,8 +120,19 @@ class ModelPipeline:
         corpus_evaluation_size_str = "\n\n{}\n{}".format(corpus_evaluation_size_str,evaluation_doc_x_class_str)
         print(corpus_evaluation_size_str)
         
+        id_real_labels = [doc_id for doc_id in self.__evaluation_corpus.corpus]
         real_labels = [self.__evaluation_corpus.get_document(doc_id).sparse_label for doc_id in self.__evaluation_corpus.corpus]
         predictions = self.__classifier.predictions
+        
+        output_pred_file_path = PropertiesManager.get_prop_value(PropertiesNames.OUTPUT_PRED_FILE_PATH)
+        if output_pred_file_path is not None:
+            if self.__allow_labels_evaluation is not None:
+                pred_output_string = "\n".join(["{}\t{}\t{}".format(triple[0],self.__allow_labels_evaluation.get_label_name(triple[1]),self.__allow_labels_evaluation.get_label_name(triple[2])) for triple in zip(id_real_labels, real_labels, predictions)])
+            else:
+                pred_output_string = "\n".join(["{}\t{}\t{}".format(triple[0],self.__allow_labels.get_label_name(triple[1]),self.__allow_labels_evaluation.get_label_name(triple[2])) for triple in zip(id_real_labels, real_labels, predictions)])
+            with open(output_pred_file_path, 'w', encoding="utf-8") as output_pred_file:
+                output_pred_file.write(pred_output_string)
+        
         confusion_matrix = ResultsMetrics.confusion_matrix(real_labels, predictions)
         confusion_matrix_string = ["Pred_{}".format(self.__allow_labels_evaluation.get_label_name(label_index)) for label_index in sorted(self.__allow_labels.label_index())]
         confusion_matrix_string = "\t" + "\t".join(confusion_matrix_string)
