@@ -138,6 +138,8 @@ class ModelPipeline:
         confusion_matrix_string = "\t" + "\t".join(confusion_matrix_string)
         confusion_matrix_string = "{}\n{}".format(confusion_matrix_string, "\n".join(["R_" + self.__allow_labels.get_label_name(i) + "\t" + "\t".join([str(j) if j is not None else str(0) for j in confusion_matrix[i]]) for i in range(len(confusion_matrix))]))
         
+        
+        
         precision_x_class = ResultsMetrics.precision_x_class(real_labels, predictions, self.__allow_labels_evaluation)
         precision_x_class_string = "\n".join(["Prec. {}: {}".format(self.__allow_labels_evaluation.get_label_name(label_index), precision_x_class[label_index]) for label_index in precision_x_class])
         recall_x_class = ResultsMetrics.recall_x_class(real_labels, predictions, self.__allow_labels_evaluation)
