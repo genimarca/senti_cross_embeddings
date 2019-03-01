@@ -1,0 +1,8 @@
+#!/bin/bash
+
+python3 senti_cross_embeddings.py ../config/new_vectors/multi/multi_english_italian_semeval_sentipol_lstm_collados_english.txt > ../results/paper/multi/multi_english_italian_semeval_sentipol_lstm_collados_english.txt
+python3 senti_cross_embeddings.py ../config/new_vectors/multi/multi_english_italian_semeval_sentipol_lstm_collados_english_italian_mono.txt > ../results/paper/multi/multi_english_italian_semeval_sentipol_lstm_collados_english_italian_mono.txt
+python3 senti_cross_embeddings.py ../config/new_vectors/multi/multi_english_italian_semeval_bilabel_sentipol_lstm_collados_english.txt > ../results/paper/multi/multi_english_italian_semeval_bilabel_sentipol_lstm_collados_english.txt
+python3 senti_cross_embeddings.py ../config/new_vectors/multi/multi_english_italian_semeval_bilabel_sentipol_lstm_collados_english_italian_mono.txt > ../results/paper/multi/multi_english_italian_semeval_bilabel_sentipol_lstm_collados_english_italian_mono.txt
+python3 senti_cross_embeddings.py ../config/new_vectors/multi/multi_english_italian_semevalNegative_bilabel_sentipol_lstm_collados_english.txt > ../results/paper/multi/multi_english_italian_semevalNegative_bilabel_sentipol_lstm_collados_english.txt
+python3 senti_cross_embeddings.py ../config/new_vectors/multi/multi_english_italian_semevalNegative_bilabel_sentipol_lstm_collados_english_italian_mono.txt > ../results/paper/multi/multi_english_italian_semevalNegative_bilabel_sentipol_lstm_collados_english_italian_mono.txt

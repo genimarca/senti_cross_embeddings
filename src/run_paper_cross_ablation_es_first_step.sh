@@ -1,0 +1,6 @@
+#!/bin/bash
+
+python3 senti_cross_embeddings.py ../config/new_vectors/ablation/cross_english_spanish_semeval_intertass_lstm_collados_en_es_emoji_vecmap.txt > ../results/paper/ablation/cross_english_spanish_semeval_intertass_lstm_collados_en_es_emoji_vecmap.txt
+python3 senti_cross_embeddings.py ../config/new_vectors/ablation/cross_english_spanish_semeval_intertass_lstm_collados_en_es_emoji_weighted.txt > ../results/paper/ablation/cross_english_spanish_semeval_intertass_lstm_collados_en_es_emoji_weighted.txt
+python3 senti_cross_embeddings.py ../config/new_vectors/ablation/cross_english_spanish_semeval_intertass_lstm_collados_en_es_homograph_vecmap.txt > ../results/paper/ablation/cross_english_spanish_semeval_intertass_lstm_collados_en_es_homograph_vecmap.txt
+python3 senti_cross_embeddings.py ../config/new_vectors/ablation/cross_english_spanish_semeval_intertass_lstm_collados_en_es_numerals_vecmap.txt > ../results/paper/ablation/cross_english_spanish_semeval_intertass_lstm_collados_en_es_numerals_vecmap.txt
