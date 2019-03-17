@@ -218,10 +218,10 @@ class BiLSTMClassficiation(ABSClassification):
         #x_encoding = LSTM(units=128, return_sequences=True)(x_sequence)
         x_encoding = Bidirectional(LSTM(units=128, return_sequences=True))(x_sequence)
         x_encoding = Dense(64,
-                           activation='relu',
+                           activation='tanh',
                            kernel_initializer=glorot_uniform(self.__random_seed),
                            kernel_regularizer=regularizers.l2(0.001),
-                           activity_regularizer=regularizers.l2(0.0001))(x_encoding)
+                           activity_regularizer=regularizers.l2(0.001))(x_encoding)
         x_encoding = Dropout(0.5)(x_encoding)
         #x_encoding = Dense(32,
         #                   activation='relu',
