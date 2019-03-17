@@ -105,6 +105,7 @@ class CorpusEnglishMoviesPangLee(ABSCorpus):
         doc.id = id_doc
         doc.raw_text = raw_text
         doc.sparse_label = self.__allow_labels.get_label_index(label)
+        print(doc.sparse_label)
         doc.raw_label = self.__allow_labels.get_label_name(doc.sparse_label)
         self.__doc_x_labels[doc.sparse_label] += 1
         self.__corpus[doc.id] = doc
