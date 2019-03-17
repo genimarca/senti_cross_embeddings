@@ -120,10 +120,10 @@ class CorpusEnglishMoviesPangLee(ABSCorpus):
             for line in file_handler:
                 fields = own_split(own_strip(line),self.__SEP_CHAR)
                 raw_text = fields[-1]+"\n"
-                line_doc = file_handler.readline()
+                line_doc = own_strip(file_handler.readline())
                 while(line_doc != "" and line_doc != "++--------\n"):
-                    raw_text = "".join([raw_text, line_doc])
-                    line_doc = file_handler.readline()
+                    raw_text = " ".join([raw_text, line_doc])
+                    line_doc = own_strip(file_handler.readline())
                 self.__add_document(fields[0], fields[1], raw_text)
                 
         
