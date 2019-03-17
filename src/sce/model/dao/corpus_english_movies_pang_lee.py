@@ -124,6 +124,8 @@ class CorpusEnglishMoviesPangLee(ABSCorpus):
                 while(line_doc != "" and line_doc != "++--------"):
                     raw_text = " ".join([raw_text, line_doc])
                     line_doc = own_strip(file_handler.readline())
+                print(fields[0])
+                print(fields[1])
                 self.__add_document(fields[0], fields[1], raw_text)
                 
         
