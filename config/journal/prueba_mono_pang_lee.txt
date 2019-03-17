@@ -8,17 +8,24 @@ CORPUS_TRAINING_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/cor
 CORPUS_TEST_NAME=EN_PANG_LEE_MOVIES
 CORPUS_TEST_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/corpora/sentiment_analysis/pang_lee_movie_reviews/pl_movie_test.csv
 EMBEDDNGS_NAME=COLLADOS
+<<<<<<< HEAD
 EMBEDINGS_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/embeddings/collados_embeddings/fasttext_english_twitter_100d.vec
 EMBEDDINGS_MAX_WORDS=500000
 EMBEDDINGS_EVALUATION_NAME=COLLADOS
 EMBEDDINGS_EVALUATION_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/embeddings/collados_embeddings/fasttext_english_twitter_100d.vec
+=======
+EMBEDINGS_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/embeddings/collados_embeddings/longtext/english.UMBC.tok.low.txt.vec
+EMBEDDINGS_MAX_WORDS=500000
+EMBEDDINGS_EVALUATION_NAME=COLLADOS
+EMBEDDINGS_EVALUATION_PATH=/home/geniugr/Documentos/trabajo/investigacion/recursos/embeddings/collados_embeddings/longtext/english.UMBC.tok.low.txt.vec
+>>>>>>> cca39302ba7fa2a0ff1b33e3838cd5127530f4c2
 EMBEDDINGS_EVALUATION_MAX_WORDS=500000
 ALLOW_LABELS_NAME=BILABEL
 ALLOW_LABELS_EVALUATION_NAME=BILABEL
 CLASSIFICATION_NAME=BiLSTM
 NORM_STOPPER=NO
 NORM_STEMMER=NO
-NN_BATCH_SIZE=64
+NN_BATCH_SIZE=128
 NN_EPOCH_SIZE=20
 OUTPUT_FILE_PATH=
 NLP_UTILS=NLPUTILS_LONG
