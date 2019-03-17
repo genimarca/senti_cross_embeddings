@@ -119,7 +119,7 @@ class CorpusEnglishMoviesPangLee(ABSCorpus):
             own_strip = str.strip
             for line in file_handler:
                 fields = own_split(own_strip(line),self.__SEP_CHAR)
-                raw_text = fields[-1]+"\n"
+                raw_text = fields[-1]
                 line_doc = own_strip(file_handler.readline())
                 while(line_doc != "" and line_doc != "++--------"):
                     raw_text = " ".join([raw_text, line_doc])
