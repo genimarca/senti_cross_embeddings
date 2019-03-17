@@ -215,8 +215,8 @@ class BiLSTMClassficiation(ABSClassification):
         
         x_sequence = layer_embeddings(x_input)
         
-        x_encoding = LSTM(units=128, return_sequences=True)(x_sequence)
-        #x_encoding = Bidirectional(LSTM(units=128, return_sequences=True))(x_sequence)
+        #x_encoding = LSTM(units=128, return_sequences=True)(x_sequence)
+        x_encoding = Bidirectional(LSTM(units=128, return_sequences=True))(x_sequence)
         #x_encoding = Dense(64,
         #                   activation='relu',
         #                   kernel_initializer=glorot_uniform(self.__random_seed),
