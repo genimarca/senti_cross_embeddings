@@ -203,7 +203,7 @@ class BiLSTMClassficiation(ABSClassification):
         epochs_size = int(PropertiesManager.get_prop_value(PropertiesNames.NN_EPOCH_SIZE))
         
         docs_labels = [self.__training_corpus.get_document(doc_id).sparse_label for doc_id in self.__training_corpus.corpus]
-        
+        print(docs_labels)
         exk_embeddings_handler = self.__features_transformers[0]
         x_input = Input(shape=(self.__max_length, ), dtype="float64")
         embeddings_weights = np_array(exk_embeddings_handler.word_embeddings)
