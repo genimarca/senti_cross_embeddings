@@ -14,7 +14,7 @@ class ABSCorpus(metaclass=ABCMeta):
     '''
 
     @abstractmethod
-    def __init__(self):
+    def __init__(self, allow_labels=None):
         '''
         Sole constructor
         '''
@@ -62,6 +62,31 @@ class ABSCorpus(metaclass=ABCMeta):
     def doc_x_labels(self):
         """
         """
+    
+    @property
+    @abstractmethod
+    def is_tokenized(self):
+        """
+        """
+        
+    @is_tokenized.setter        
+    @abstractmethod
+    def is_tokenized(self, a_is_tokenized):
+        """
+        """
+        
+    @property
+    @abstractmethod
+    def is_lowercase(self):
+        """
+        """
+        
+    @is_lowercase.setter
+    @abstractmethod
+    def is_lowercase(self, a_is_lowercase):
+        """
+        """
+
     
     @abstractmethod
     def load(self, path):

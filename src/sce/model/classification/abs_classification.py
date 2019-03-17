@@ -64,6 +64,18 @@ class ABSClassification(metaclass=ABCMeta):
     def allow_labels(self, a_allow_labels):
         pass
         
+    @property
+    @abstractmethod
+    def nlp_utils(self):
+        """
+        """
+        
+    @nlp_utils.setter
+    @abstractmethod
+    def nlp_utils(self, a_nlp_utils):
+        """
+        """
+    
     
     @abstractmethod
     def make_feature_space_training(self, external_knowledge=None):

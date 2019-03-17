@@ -8,7 +8,6 @@ from sce.model.classification.abs_classification import ABSClassification
 from sce.model.embeddings.abs_word_embeddings import ABSWordEmbeddings
 from sce.model.properties_manager import PropertiesManager
 from sce.model.properties_names import PropertiesNames
-from sce.model.nlp_utils import NLPUtils
 from numpy import array as np_array
 from numpy.random import rand as np_rand
 from numpy.random import seed as np_seed
@@ -46,6 +45,21 @@ class BiLSTMClassficiation(ABSClassification):
         self.__allow_labels = None
         self.__oov_vector = None
         self.__padding_vector = None
+        self.__nlp_utils = None
+        
+        
+    @property
+    def nlp_utils(self):
+        """
+        """
+        return self.__nlp_utils
+        
+    @nlp_utils.setter
+    def nlp_utils(self, a_nlp_utils):
+        """
+        """
+        self.__nlp_utils = a_nlp_utils
+        print(self.__nlp_utils)
         
         
     @property
@@ -114,13 +128,16 @@ class BiLSTMClassficiation(ABSClassification):
     def __feature_engineering(self, corpus):
         for doc_index in corpus.corpus:
             doc = corpus.get_document(doc_index)
-            preparing_text = NLPUtils.normalization_lowercase(doc.raw_text)
-            preparing_text = NLPUtils.normalization_users(preparing_text, "@user")
-            preparing_text = NLPUtils.tokenize_tweet(preparing_text, a_preserve_case=False, a_reduce_len=True, a_strip_handles=False)
+            preparing_text = doc.raw_text
+            if not corpus.is_lowercase:
+                preparing_text = self.__nlp_utils.normalization_lowercase(preparing_text)
+            if PropertiesManager.get_prop_value(PropertiesNames.NORM_USER):
+                preparing_text = self.__nlp_utils.normalization_users(preparing_text, "@user")
+            preparing_text = self.__nlp_utils.tokenize(preparing_text, a_preserve_case=False, a_reduce_len=True, a_strip_handles=False)
             if PropertiesManager.get_prop_value(PropertiesNames.NORM_STOPPER):
-                preparing_text = NLPUtils.stopper(preparing_text, PropertiesManager.get_prop_value(PropertiesNames.LANGUAGE_TRAINING))
+                preparing_text = self.__nlp_utils.stopper(preparing_text, PropertiesManager.get_prop_value(PropertiesNames.LANGUAGE_TRAINING))
             if PropertiesManager.get_prop_value(PropertiesNames.NORM_STEMMER):
-                preparing_text = NLPUtils.stemmer(preparing_text, PropertiesManager.get_prop_value(PropertiesNames.LANGUAGE_TRAINING))
+                preparing_text = self.__nlp_utils.stemmer(preparing_text, PropertiesManager.get_prop_value(PropertiesNames.LANGUAGE_TRAINING))
             doc.process_text = preparing_text
             
             

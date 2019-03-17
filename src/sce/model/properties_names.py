@@ -57,11 +57,15 @@ class PropertiesNames(object):
     
     NORM_STEMMER = "NORM_STEMMER"
     
+    NORM_USER = "NORM_USER"
+    
     NN_BATCH_SIZE = "NN_BATCH_SIZE"
     
     NN_EPOCH_SIZE = "NN_EPOCH_SIZE"
     
     OUTPUT_PRED_FILE_PATH = "OUTPUT_PRED_FILE_PATH"
+    
+    NLP_UTILS = "NLP_UTILS"
     
     
     

@@ -30,3 +30,5 @@ class CorpusNames(Enum):
     
     GERMAN_SB10K = "sce.model.dao.corpus_german_sb10k.CorpusGermanSB10"
     
+    EN_PANG_LEE_MOVIES = "sce.model.dao.corpus_english_movies_pang_lee.CorpusEnglishMoviesPangLee"
+    

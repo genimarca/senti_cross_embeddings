@@ -30,6 +30,8 @@ class CorpusSentipolc(ABSCorpus):
         self.__SEP_CHAR = ","
         self.__allow_labels = allow_labels
         self.__doc_x_labels = None
+        self.__is_tokenized = None
+        self.__is_lowercase = None
         
         
     @property
@@ -70,6 +72,31 @@ class CorpusSentipolc(ABSCorpus):
         """
         """
         return self.__doc_x_labels
+    
+    @property        
+    def is_tokenized(self):
+        """
+        """
+        return self.__is_tokenized
+        
+    @is_tokenized.setter        
+    def is_tokenized(self, a_is_tokenized):
+        """
+        """
+        
+        self.__is_tokenized = a_is_tokenized
+        
+    @property
+    def is_lowercase(self):
+        """
+        """
+        return self.__is_lowercase
+        
+    @is_lowercase.setter
+    def is_lowercase(self, a_is_lowercase):
+        """
+        """
+        self.__is_lowercase = a_is_lowercase
     
     def __add_document(self, raw_tweet):
         

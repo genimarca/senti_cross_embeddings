@@ -12,6 +12,8 @@ from sce.model.factory_allow_labels import FactoryAllowLabels
 from sce.model.classification.factory_classification import FactoryClassification
 from sce.model.embeddings.factory_embeddings import FactoryEmbeddings
 from sce.model.classification.results_metrics import ResultsMetrics
+from sce.model.factory_nlp_utils import FactoryNLPUtils
+from sce.model.nlp_utils_names import NLPUtilsNames
 
 class ModelPipeline:
     '''
@@ -32,7 +34,11 @@ class ModelPipeline:
         self.__allow_labels_evaluation = None
         self.__classifier = None
         self.__random_seed = None
+        self.__nlp_utils = None
         self.__external_knowledge = {}
+        self.__language_training = None
+        self.__language_test = None
+        
         
         
     def initialization(self, properties_file_path):
@@ -88,11 +94,36 @@ class ModelPipeline:
             if embeddings_name is not None:
                 self.__embeddings_evaluation_handler = FactoryEmbeddings.creator(embeddnigs_evaluation_name)
                 self.__external_knowledge["embeddings_evaluation"] = self.__embeddings_evaluation_handler
+                
+        
+        language_training_name = PropertiesManager.get_prop_value(PropertiesNames.LANGUAGE_TRAINING)
+        if language_training_name:
+            self.__language_training=language_training_name
+        else:
+            self.__language_training = "english"
+            
+        language_test_name = PropertiesManager.get_prop_value(PropertiesNames.LANGUAGE_TEST)
+        if language_training_name:
+            self.__language_test=language_test_name
+        else:
+            self.__language_test = "english"
+        
+        nlp_utils_name = PropertiesManager.get_prop_value(PropertiesNames.NLP_UTILS)
+        if nlp_utils_name:
+            self.__nlp_utils = FactoryNLPUtils.creator(nlp_utils_name)
+        else:
+            self.__nlp_utils = FactoryNLPUtils.creator(NLPUtilsNames.NLPUTILS_TWITTER)
+            
+        self.__nlp_utils.language = self.__language_training
+        self.__nlp_utils.token_whitespace = self.__training_corpus.is_tokenized
+            
+        
         
     
     
     def training(self):
         self.__classifier.training_corpus = self.__training_corpus
+        self.__classifier.nlp_utils = self.__nlp_utils
         self.__classifier.random_seed = self.__random_seed
         self.__classifier.allow_labels = self.__allow_labels
         self.__classifier.make_feature_space_training(external_knowledge=self.__external_knowledge)
