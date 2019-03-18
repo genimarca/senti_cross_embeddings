@@ -105,7 +105,6 @@ class CorpusEnglishMoviesPangLee(ABSCorpus):
         doc.id = id_doc
         doc.raw_text = raw_text
         doc.sparse_label = self.__allow_labels.get_label_index(label)
-        print(doc.sparse_label)
         doc.raw_label = self.__allow_labels.get_label_name(doc.sparse_label)
         self.__doc_x_labels[doc.sparse_label] += 1
         self.__corpus[doc.id] = doc
@@ -125,8 +124,6 @@ class CorpusEnglishMoviesPangLee(ABSCorpus):
                 while(line_doc != "" and line_doc != "++--------"):
                     raw_text = " ".join([raw_text, line_doc])
                     line_doc = own_strip(file_handler.readline())
-                print(fields[0])
-                print(fields[1])
                 self.__add_document(fields[0], fields[1], raw_text)
                 
         
