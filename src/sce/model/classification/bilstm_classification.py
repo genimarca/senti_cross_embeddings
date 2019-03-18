@@ -225,7 +225,8 @@ class BiLSTMClassficiation(ABSClassification):
                            
         x_encoding = Dense(128,
                            activation='relu',
-                           kernel_initializer=glorot_uniform(self.__random_seed))(x_encoding)
+                           kernel_initializer=glorot_uniform(self.__random_seed),
+                           kernel_regularizer=regularizers.l2(0.0001))(x_encoding)
         x_encoding = Dropout(0.5)(x_encoding)
         #x_encoding = Dense(32,
         #                   activation='relu',
@@ -234,7 +235,8 @@ class BiLSTMClassficiation(ABSClassification):
         #                   activity_regularizer=regularizers.l2(0.0001))(x_encoding)
         x_encoding = Dense(32,
                            activation='relu',
-                           kernel_initializer=glorot_uniform(self.__random_seed))(x_encoding)
+                           kernel_initializer=glorot_uniform(self.__random_seed),
+                           kernel_regularizer=regularizers.l2(0.0001))(x_encoding)
                                               
         x_encoding = Dropout(0.5)(x_encoding)
         x_encoding = Flatten()(x_encoding)
