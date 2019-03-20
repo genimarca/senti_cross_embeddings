@@ -32,7 +32,7 @@ class CorpusNames(Enum):
     
     EN_PANG_LEE_MOVIES = "sce.model.dao.corpus_english_movies_pang_lee.CorpusEnglishMoviesPangLee"
     
-    ES_MUCHOCINE_MOVIES = "sce.model.dao.corpus_english_movies_pang_lee.CorpusMuchoCine"
+    ES_MUCHOCINE_MOVIES = "sce.model.dao.corpus_muchocine.CorpusMuchoCine"
     
     
     

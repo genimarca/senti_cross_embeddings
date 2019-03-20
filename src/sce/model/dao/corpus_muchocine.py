@@ -17,15 +17,18 @@ class CorpusMuchoCine(ABSCorpus):
     '''
     
     
-    def __init__(self):
+    def __init__(self, allow_labels=BilabelExperiments()):
         '''
         Constructor
         '''
         self.__allow_labels=None
         self.__encoding = "utf-8"
         self.__corpus=OrderedDict()
-        self.__doc_x_labels = None
+        self.__allow_labels = allow_labels
+        self.__doc_x_labels = {i:0 for i in self.__allow_labels.label_index()}
         self.__SEP_CHAR = "\";\""
+        self.__is_tokenized = False
+        self.__is_lowercase = False
         
         
     @property
@@ -59,24 +62,6 @@ class CorpusMuchoCine(ABSCorpus):
         """
         return self.__corpus
         
-    def doc_ids(self):
-        """
-        """
-        
-        return list(self.__corpus.keys())
-        
-    @property
-    def doc_x_labels(self):
-        """
-        """
-        if self.__doc_x_labels is None:
-            self.__doc_x_labels = {self.__corpus[doc_id].raw_label:0 
-                                   if self.__corpus[doc_id].raw_label not in self.__doc_x_labels else self.__doc_x_labels[self.__corpus[doc_id].raw_label]+1 
-                                   for doc_id in self.__corpus.keys()}
-            
-        return self.__doc_x_labels
-        
-    
     @property        
     def is_tokenized(self):
         """
@@ -103,27 +88,43 @@ class CorpusMuchoCine(ABSCorpus):
         self.__is_lowercase = a_is_lowercase
     
     
-    def __add_document(self, line):
+    def doc_ids(self):
         """
         """
-        label = int(line[1])
-        if label == 1:
-            label = 5 
-        allow_label = self.__allow_labels.get_label_index(label)
-        if allow_label is not None:
-            doc = Document()
-            doc.id = int(line[0])
-            doc.raw_title = line[2]
-            doc.raw_body = line[-1]
-            label = int(line[1])
-            if label == 1:
-                label = 5 
-            doc.raw_label = label
-            doc.allow_label = allow_label
-            self.__corpus[doc.id] = doc
-            print("INFO: READ doc: {}".format(doc.id))
-        else:
-            print("INFO: The doc: {} has a non allowed label {}".format(line[0], label))
+        
+        return list(self.__corpus.keys())
+        
+    @property
+    def doc_x_labels(self):
+        """
+        """
+        if self.__doc_x_labels is None:
+            self.__doc_x_labels = {self.__corpus[doc_id].raw_label:0 
+                                   if self.__corpus[doc_id].raw_label not in self.__doc_x_labels else self.__doc_x_labels[self.__corpus[doc_id].raw_label]+1 
+                                   for doc_id in self.__corpus.keys()}
+            
+        return self.__doc_x_labels
+        
+    
+    
+    
+    
+    def __add_document(self, id_doc, label_index, raw_text):
+        """
+        """
+        
+        doc = Document()
+        doc.id = id_doc
+        doc.raw_text = raw_text
+        doc.sparse_label = int(label_index)
+        print(id_doc)
+        print(label_index)
+        doc.raw_label = self.__allow_labels.get_label_name(doc.sparse_label)
+        self.__doc_x_labels[doc.sparse_label] += 1
+        self.__corpus[doc.id] = doc
+        
+        
+        
     
     def load(self, path):
         """
@@ -133,9 +134,9 @@ class CorpusMuchoCine(ABSCorpus):
             own_split = str.split
             own_strip = str.strip
             for line in hand_file:
-                line = own_split(own_strip(line), self.__SEP_CHAR)
-                self.__add_document(line)
-                hand_file.readline()
+                fields = own_split(own_strip(line), self.__SEP_CHAR)
+                self.__add_document(fields[0], fields[1], fields[2])
+                
             
         
         

@@ -12,6 +12,7 @@ from numpy import array as np_array
 from numpy.random import rand as np_rand
 from numpy.random import seed as np_seed
 from numpy import argmax as np_argmax
+from scipy.stats import mode as smode
 from numpy import median as np_median
 from tensorflow import set_random_seed as tsf_set_random_seed
 from keras.models import Model
@@ -20,6 +21,7 @@ from keras.initializers import glorot_uniform
 from keras import regularizers
 
 from keras.callbacks import EarlyStopping
+from keras.layers.pooling import GlobalMaxPool1D
 
 class BiLSTMClassficiation(ABSClassification):
     '''
@@ -151,9 +153,10 @@ class BiLSTMClassficiation(ABSClassification):
         exk_embeddings_handler = external_knowledge["embeddings"]
         self.__load_exk_embeddings(exk_embeddings_handler)
         
-        
-        self.__max_length = np_median([len(self.__training_corpus.get_document(doc_index).process_text)for doc_index in self.__training_corpus.corpus])
-        self.__max_length = int(self.__max_length)
+        #self.__max_length = max([len(self.__training_corpus.get_document(doc_index).process_text)for doc_index in self.__training_corpus.corpus])
+        self.__max_length = smode([len(self.__training_corpus.get_document(doc_index).process_text)for doc_index in self.__training_corpus.corpus])
+        #self.__max_length = np_median([len(self.__training_corpus.get_document(doc_index).process_text)for doc_index in self.__training_corpus.corpus])
+        self.__max_length = int(self.__max_length[0])
         self.__features_training = []
         own_features_training_append = self.__features_training.append
         for doc_index in self.__training_corpus.corpus:
@@ -203,7 +206,6 @@ class BiLSTMClassficiation(ABSClassification):
         epochs_size = int(PropertiesManager.get_prop_value(PropertiesNames.NN_EPOCH_SIZE))
         
         docs_labels = [self.__training_corpus.get_document(doc_id).sparse_label for doc_id in self.__training_corpus.corpus]
-        print(docs_labels)
         exk_embeddings_handler = self.__features_transformers[0]
         x_input = Input(shape=(self.__max_length, ), dtype="float64")
         embeddings_weights = np_array(exk_embeddings_handler.word_embeddings)
@@ -216,30 +218,31 @@ class BiLSTMClassficiation(ABSClassification):
         x_sequence = layer_embeddings(x_input)
         
         #x_encoding = LSTM(units=128, return_sequences=True)(x_sequence)
-        x_encoding = Bidirectional(LSTM(units=64, return_sequences=True))(x_sequence)
+        x_encoding = Bidirectional(LSTM(units=128, return_sequences=True))(x_sequence)
+        x_encoding = GlobalMaxPool1D()(x_encoding)
         #x_encoding = Dense(64,
         #                   activation='relu',
         #                   kernel_initializer=glorot_uniform(self.__random_seed),
         #                   kernel_regularizer=regularizers.l2(0.0001),
         #                   activity_regularizer=regularizers.l2(0.0001))(x_encoding)
                            
-        x_encoding = Dense(64,
-                           activation='relu',
-                           kernel_initializer=glorot_uniform(self.__random_seed),
-                           kernel_regularizer=regularizers.l2(0.001))(x_encoding)
-        x_encoding = Dropout(0.5)(x_encoding)
-        #x_encoding = Dense(32,
+        #x_encoding = Dense(64,
         #                   activation='relu',
         #                   kernel_initializer=glorot_uniform(self.__random_seed),
-        #                   kernel_regularizer=regularizers.l2(0.001),
-        #                   activity_regularizer=regularizers.l2(0.0001))(x_encoding)
+        #                   kernel_regularizer=regularizers.l2(0.001))(x_encoding)
+        #x_encoding = Dropout(0.5)(x_encoding)
         x_encoding = Dense(32,
                            activation='relu',
                            kernel_initializer=glorot_uniform(self.__random_seed),
-                           kernel_regularizer=regularizers.l2(0.001))(x_encoding)
+                           kernel_regularizer=regularizers.l2(0.001),
+                           activity_regularizer=regularizers.l2(0.0001))(x_encoding)
+        #x_encoding = Dense(32,
+        #                   activation='relu',
+        #                   kernel_initializer=glorot_uniform(self.__random_seed),
+        #                   kernel_regularizer=regularizers.l2(0.001))(x_encoding)
                                               
         x_encoding = Dropout(0.5)(x_encoding)
-        x_encoding = Flatten()(x_encoding)
+        #x_encoding = Flatten()(x_encoding)
         x_logits = Dense(self.__allow_labels.number_of_labels,
                          activation="softmax")(x_encoding)
         
