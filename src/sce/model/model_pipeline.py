@@ -112,8 +112,9 @@ class ModelPipeline:
         if nlp_utils_name:
             self.__nlp_utils = FactoryNLPUtils.creator(nlp_utils_name)
         else:
-            self.__nlp_utils = FactoryNLPUtils.creator(NLPUtilsNames.NLPUTILS_TWITTER)
+            self.__nlp_utils = FactoryNLPUtils.creator(NLPUtilsNames.NLPUTILS_TWITTER.name)
             
+        
         self.__nlp_utils.language = self.__language_training
         self.__nlp_utils.token_whitespace = self.__training_corpus.is_tokenized
             
